@@ -51,33 +51,31 @@ describe('OnBeforeUnload', function () {
         });
     });
     describe('Check conditions', function () {
-        var beforeUnload;
-        beforeEach(function () {
-             beforeUnload = new BeforeUnload(null, [], false);
-        });
+        var fakeObj;
         it('should return true if the one provided condition is true', function () {
-            beforeUnload.conditions = [
+            fakeObj = { conditions: [
                 sinon.stub().returns(true)
-            ];
-            expect(beforeUnload.check(), 'to be ok');
+            ] };
+            expect(BeforeUnload.prototype.check.call(fakeObj), 'to be ok');
         });
         it('should return false if the one provided condition is false', function () {
-            beforeUnload.conditions = [
+            fakeObj = { conditions: [
                 sinon.stub().returns(false)
-            ];
-            expect(beforeUnload.check(), 'not to be ok');
+            ] };
+            expect(BeforeUnload.prototype.check.call(fakeObj), 'not to be ok');
         });
         it('should return true if at least one provided condition is true', function () {
-            beforeUnload.conditions = [
+            fakeObj = { conditions: [
                 sinon.stub().returns(false),
                 sinon.stub().returns(false),
                 sinon.stub().returns(true),
                 sinon.stub().returns(false)
-            ];
-            expect(beforeUnload.check(), 'to be ok');
+            ] };
+            expect(BeforeUnload.prototype.check.call(fakeObj), 'to be ok');
         });
         it('should return false if no conditions is provided', function () {
-            expect(beforeUnload.check(), 'not to be ok');
+            fakeObj = { conditions: [] };
+            expect(BeforeUnload.prototype.check.call(fakeObj), 'not to be ok');
         });
     });
     describe('Registering event handlers', function () {
