@@ -59,4 +59,24 @@ describe('OnBeforeUnload', function () {
             expect(beforeUnload.check(), 'not to be ok');
         });
     });
+    describe('Registering event handlers', function () {
+        var beforeUnload;
+        beforeEach(function () {
+            beforeUnload = new BeforeUnload(null, null, false);
+        });
+        it('should be able to register an event handler', function () {
+            var spy = sinon.spy();
+            beforeUnload.register({
+                addEventListener: spy
+            }, 'a mocked handler');
+            expect(spy, 'was called with', 'beforeunload', 'a mocked handler');
+        });
+        it('should be able to unregister an event handler', function () {
+            var spy = sinon.spy();
+            beforeUnload.unregister({
+                removeEventListener: spy
+            }, 'a mocked handler');
+            expect(spy, 'was called with', 'beforeunload', 'a mocked handler');
+        });
+    });
 });

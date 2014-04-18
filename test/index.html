@@ -6,11 +6,13 @@
   </head>
   <body>
     <div id="mocha"></div>
-    <script src="../node_modules/unexpected/unexpected.js"></script>
-    <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/sinon/pkg/sinon.js"></script>
+    <script src="../node_modules/unexpected/unexpected.js"></script>
+    <script src="../node_modules/unexpected-sinon/lib/unexpected-sinon.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
     <script>
-        var expect = weknowhow.expect;
+        var expect = weknowhow.expect.clone();
+        expect.installPlugin(weknowhow.unexpectedSinon);
 
         mocha.setup('bdd');
     </script>
