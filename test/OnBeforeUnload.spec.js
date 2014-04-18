@@ -96,17 +96,32 @@ describe('OnBeforeUnload', function () {
     describe('Registering event handlers', function () {
         it('should be able to register an event handler', function () {
             var spy = sinon.spy();
-            BeforeUnload.prototype.register({
+            var fakeObj = {};
+            BeforeUnload.prototype.register.call(fakeObj, {
                 addEventListener: spy
             }, 'a handler');
             expect(spy, 'was called with', 'beforeunload', 'a handler');
+            expect(fakeObj, 'to have property', 'handlerReference', 'a handler');
         });
         it('should be able to unregister an event handler', function () {
             var spy = sinon.spy();
-            BeforeUnload.prototype.unregister({
+            var fakeObj = {
+                handlerReference: 'a handler'
+            };
+            BeforeUnload.prototype.unregister.call(fakeObj, {
                 removeEventListener: spy
             }, 'a handler');
             expect(spy, 'was called with', 'beforeunload', 'a handler');
+            expect(fakeObj, 'to have property', 'handlerReference', null);
+        });
+        it('should not attempt to unregister an event handler if one is not registered', function () {
+            var spy = sinon.spy();
+            BeforeUnload.prototype.unregister.call({
+                handlerReference: null
+            }, {
+                removeEventListener: spy
+            }, 'a handler');
+            expect(spy, 'was not called');
         });
     });
     describe('Handler', function () {
