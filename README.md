@@ -1,5 +1,7 @@
 # before-unload
 
+[![Build Status](https://travis-ci.org/gustavnikolaj/before-unload.svg)](https://travis-ci.org/gustavnikolaj/before-unload)
+
 A generic onbeforeunload handler. Will check a condition, or a list of
 supplied conditions, to determine if it is safe to unload.
 
