@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="/css/default.css">
-    <script src="/OnBeforeUnload.js"></script>
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/default.css">
+    <script src="{{ site.baseurl }}/OnBeforeUnload.js"></script>
 </head>
 <body>
 
@@ -11,20 +11,20 @@
 
 <div class="topbar">
     <div class="item">
-        <a href="/">Home</a>
+        <a href="{{ site.baseurl }}/">Home</a>
     </div>
     <div class="item">
-        <a href="/examples/simple/">
+        <a href="{{ site.baseurl }}/examples/simple/">
             Simple
         </a>
     </div>
     <div class="item">
-        <a href="/examples/unregister/">
+        <a href="{{ site.baseurl }}/examples/unregister/">
             Unregister
         </a>
     </div>
     <div class="item">
-        <a href="/examples/multiple-conditions/">
+        <a href="{{ site.baseurl }}/examples/multiple-conditions/">
             Multiple
         </a>
     </div>

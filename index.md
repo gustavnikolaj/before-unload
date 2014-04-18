@@ -6,7 +6,7 @@ layout: default
 A generic onbeforeunload handler. Will check a condition, or a list of
 supplied conditions, to determine if it is safe to unload.
 
-Take a look at the [examples](/examples/simple/).
+Take a look at the [examples]({{ site.baseurl }}/examples/simple/).
 
 # Installation
 
