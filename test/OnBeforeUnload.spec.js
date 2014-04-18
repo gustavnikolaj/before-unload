@@ -2,7 +2,7 @@ describe('OnBeforeUnload', function () {
     describe('Constructor', function () {
         it('should take a message paramater', function () {
             var message = 'A testing message';
-            var beforeUnload = new BeforeUnload(message, null, false);
+            var beforeUnload = new BeforeUnload(message, [], false);
             expect(beforeUnload.message, 'to be', message);
         });
         it('should take a conditions paramater', function () {
@@ -11,9 +11,11 @@ describe('OnBeforeUnload', function () {
             expect(beforeUnload.conditions, 'to equal', conditions);
         });
         describe('register parameter', function () {
-            var mock;
+            var mock = {
+                validateConditions: sinon.stub.returns([])
+            };
             beforeEach(function () {
-                mock = { register: sinon.spy() };
+                mock.register = sinon.spy();
             });
             it('should call the register function when asked to', function () {
                 BeforeUnload.call(mock, null, null, true);
@@ -26,6 +28,25 @@ describe('OnBeforeUnload', function () {
             it('should call the register function when no directions is given', function () {
                 BeforeUnload.call(mock, null, null);
                 expect(mock.register, 'was called');
+            });
+        });
+    });
+    describe('Validate parameters', function () {
+        describe('conditions', function () {
+            it('should take a conditions paramater as a list', function () {
+                expect(function () {
+                    BeforeUnload.prototype.validateConditions(['a', 'b', 'c']);
+                }, 'not to throw');
+            });
+            it('should take a single condition as a function', function () {
+                expect(function () {
+                    BeforeUnload.prototype.validateConditions(function () {});
+                }, 'not to throw');
+            });
+            it('should throw is passed neither a function nor a list', function () {
+                expect(function () {
+                    BeforeUnload.prototype.validateConditions('not a function');
+                }, 'to throw', 'You must provide either a list of functions, a function, or nothing as the second parameter.');
             });
         });
     });
@@ -62,7 +83,7 @@ describe('OnBeforeUnload', function () {
     describe('Registering event handlers', function () {
         var beforeUnload;
         beforeEach(function () {
-            beforeUnload = new BeforeUnload(null, null, false);
+            beforeUnload = new BeforeUnload(null, [], false);
         });
         it('should be able to register an event handler', function () {
             var spy = sinon.spy();
