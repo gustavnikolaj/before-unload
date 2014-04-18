@@ -2,12 +2,12 @@ describe('OnBeforeUnload', function () {
     describe('Constructor', function () {
         it('should take a message paramater', function () {
             var message = 'A testing message';
-            var beforeUnload = new BeforeUnload(message);
+            var beforeUnload = new BeforeUnload(message, null, false);
             expect(beforeUnload.message, 'to be', message);
         });
         it('should take a conditions paramater', function () {
             var conditions = ['a', 'b', 'c'];
-            var beforeUnload = new BeforeUnload(null, conditions);
+            var beforeUnload = new BeforeUnload(null, conditions, false);
             expect(beforeUnload.conditions, 'to equal', conditions);
         });
         describe('register parameter', function () {
@@ -32,7 +32,7 @@ describe('OnBeforeUnload', function () {
     describe('Check conditions', function () {
         var beforeUnload;
         beforeEach(function () {
-             beforeUnload = new BeforeUnload(null, []);
+             beforeUnload = new BeforeUnload(null, [], false);
         });
         it('should return true if the one provided condition is true', function () {
             beforeUnload.conditions = [
