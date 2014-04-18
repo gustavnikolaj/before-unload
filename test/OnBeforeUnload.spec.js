@@ -1,34 +1,36 @@
 describe('OnBeforeUnload', function () {
     describe('Constructor', function () {
+        var fakeObj;
+        beforeEach(function () {
+            fakeObj = {
+                validateMessage: sinon.stub().returnsArg(0),
+                validateConditions: sinon.stub().returnsArg(0),
+                register: sinon.stub()
+            };
+        });
         it('should take a message paramater', function () {
-            var message = 'A testing message';
-            var beforeUnload = new BeforeUnload(message, [], false);
-            expect(beforeUnload.message, 'to be', message);
+            BeforeUnload.call(fakeObj, 'A message');
+            expect(fakeObj.message, 'to be', 'A message');
         });
         it('should take a conditions paramater', function () {
-            var conditions = ['a', 'b', 'c'];
-            var beforeUnload = new BeforeUnload('', conditions, false);
-            expect(beforeUnload.conditions, 'to equal', conditions);
+            BeforeUnload.call(fakeObj, null, ['a', 'b', 'c']);
+            expect(fakeObj.conditions, 'to equal', ['a', 'b', 'c']);
         });
         describe('register parameter', function () {
-            var mock = {
-                validateMessage: sinon.stub.returns([]),
-                validateConditions: sinon.stub.returns([])
-            };
             beforeEach(function () {
-                mock.register = sinon.spy();
+                fakeObj.register = sinon.spy();
             });
             it('should call the register function when asked to', function () {
-                BeforeUnload.call(mock, null, null, true);
-                expect(mock.register, 'was called');
+                BeforeUnload.call(fakeObj, null, null, true);
+                expect(fakeObj.register, 'was called');
             });
             it('should not call the register function when not asked to', function () {
-                BeforeUnload.call(mock, null, null, false);
-                expect(mock.register, 'was not called');
+                BeforeUnload.call(fakeObj, null, null, false);
+                expect(fakeObj.register, 'was not called');
             });
             it('should call the register function when no directions is given', function () {
-                BeforeUnload.call(mock, null, null);
-                expect(mock.register, 'was called');
+                BeforeUnload.call(fakeObj, null, null);
+                expect(fakeObj.register, 'was called');
             });
         });
     });
