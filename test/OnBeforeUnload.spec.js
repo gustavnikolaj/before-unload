@@ -7,11 +7,12 @@ describe('OnBeforeUnload', function () {
         });
         it('should take a conditions paramater', function () {
             var conditions = ['a', 'b', 'c'];
-            var beforeUnload = new BeforeUnload(null, conditions, false);
+            var beforeUnload = new BeforeUnload('', conditions, false);
             expect(beforeUnload.conditions, 'to equal', conditions);
         });
         describe('register parameter', function () {
             var mock = {
+                validateMessage: sinon.stub.returns([]),
                 validateConditions: sinon.stub.returns([])
             };
             beforeEach(function () {
@@ -32,6 +33,18 @@ describe('OnBeforeUnload', function () {
         });
     });
     describe('Validate parameters', function () {
+        describe('message', function () {
+            it('should take a message parameter as a string', function () {
+                expect(function () {
+                    BeforeUnload.prototype.validateMessage('a message');
+                }, 'not to throw');
+            });
+            it('should not take a message parameter as anything but a string', function () {
+                expect(function () {
+                    BeforeUnload.prototype.validateMessage();
+                }, 'to throw', 'You must provide a message.');
+            });
+        });
         describe('conditions', function () {
             it('should take a conditions paramater as a list', function () {
                 expect(function () {
@@ -81,7 +94,7 @@ describe('OnBeforeUnload', function () {
     describe('Registering event handlers', function () {
         var beforeUnload;
         beforeEach(function () {
-            beforeUnload = new BeforeUnload(null, [], false);
+            beforeUnload = new BeforeUnload('', [], false);
         });
         it('should be able to register an event handler', function () {
             var spy = sinon.spy();
