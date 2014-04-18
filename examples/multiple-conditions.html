@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiple conditions beforeunload example</title>
+</head>
+<body>
+    <h1>Multiple conditions beforeunload example.</h1>
+    <p>
+       To see it in action, refresh the page. You will be prompted for
+       confirmation, if one or more of the below conditions are
+       checked.
+    </p>
+    <p>
+        <input type="checkbox" id="condition1" checked="checked">
+        Condition 1
+    </p>
+    <p>
+        <input type="checkbox" id="condition2" checked="checked">
+        Condition 2
+    </p>
+    <script src="../lib/OnBeforeUnload.js"></script>
+    <script>
+        var handler = new BeforeUnload('Are you sure you wanna go?', [
+            function () {
+                return document.getElementById('condition1').checked;
+            },
+            function () {
+                return document.getElementById('condition2').checked;
+            }
+        ]);
+    </script>
+</body>
+</html>
