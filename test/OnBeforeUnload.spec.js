@@ -11,29 +11,21 @@ describe('OnBeforeUnload', function () {
             expect(beforeUnload.conditions, 'to equal', conditions);
         });
         describe('register parameter', function () {
-            var origBeforeUnload = BeforeUnload.prototype;
-            var spy;
+            var mock;
             beforeEach(function () {
-                spy = sinon.spy();
-                BeforeUnload.prototype = origBeforeUnload;
-            });
-            after(function () {
-                BeforeUnload.prototype = origBeforeUnload;
+                mock = { register: sinon.spy() };
             });
             it('should call the register function when asked to', function () {
-                BeforeUnload.prototype.register = spy;
-                var beforeUnload = new BeforeUnload(null, null, true);
-                expect(spy.called, 'to be ok');
+                BeforeUnload.call(mock, null, null, true);
+                expect(mock.register.called, 'to be ok');
             });
             it('should not call the register function when not asked to', function () {
-                BeforeUnload.prototype.register = spy;
-                var beforeUnload = new BeforeUnload(null, null, false);
-                expect(spy.called, 'not to be ok');
+                BeforeUnload.call(mock, null, null, false);
+                expect(mock.register.called, 'not to be ok');
             });
             it('should call the register function when no directions is given', function () {
-                BeforeUnload.prototype.register = spy;
-                var beforeUnload = new BeforeUnload(null, null);
-                expect(spy.called, 'to be ok');
+                BeforeUnload.call(mock, null, null);
+                expect(mock.register.called, 'to be ok');
             });
         });
     });
