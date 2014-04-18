@@ -35,33 +35,36 @@ describe('OnBeforeUnload', function () {
         });
     });
     describe('Validate parameters', function () {
+        var stub = {
+            throwException: sinon.stub().throws()
+        };
         describe('message', function () {
             it('should take a message parameter as a string', function () {
                 expect(function () {
-                    BeforeUnload.prototype.validateMessage('a message');
+                    BeforeUnload.prototype.validateMessage.call(stub, 'a message');
                 }, 'not to throw');
             });
             it('should not take a message parameter as anything but a string', function () {
                 expect(function () {
-                    BeforeUnload.prototype.validateMessage();
-                }, 'to throw', 'You must provide a message.');
+                    BeforeUnload.prototype.validateMessage.call(stub);
+                }, 'to throw');
             });
         });
         describe('conditions', function () {
             it('should take a conditions paramater as a list', function () {
                 expect(function () {
-                    BeforeUnload.prototype.validateConditions(['a', 'b', 'c']);
+                    BeforeUnload.prototype.validateConditions.call(stub, ['a', 'b', 'c']);
                 }, 'not to throw');
             });
             it('should take a single condition as a function', function () {
                 expect(function () {
-                    BeforeUnload.prototype.validateConditions(function () {});
+                    BeforeUnload.prototype.validateConditions.call(stub, function () {});
                 }, 'not to throw');
             });
             it('should throw is passed neither a function nor a list', function () {
                 expect(function () {
-                    BeforeUnload.prototype.validateConditions('not a function');
-                }, 'to throw', 'You must provide either a list of functions, a function, or nothing as the second parameter.');
+                    BeforeUnload.prototype.validateConditions.call(stub, 'not a function');
+                }, 'to throw');
             });
         });
     });
@@ -143,6 +146,13 @@ describe('OnBeforeUnload', function () {
             var result = BeforeUnload.prototype.handler.call(fakeObj, event);
             expect(result, 'to be undefined');
             expect(event.returnValue, 'to be undefined');
+        });
+    });
+    describe('Exceptions', function () {
+        it('should throw a name spaced exception', function () {
+            expect(function () {
+                BeforeUnload.prototype.throwException.call(null, 'An exception');
+            }, 'to throw', 'before-unload: An exception');
         });
     });
 });
