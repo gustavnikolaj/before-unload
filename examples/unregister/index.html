@@ -1,0 +1,24 @@
+---
+title: Unregister beforeunload example.
+layout: example
+---
+
+<p>To see it in action, refresh the page.</p>
+
+<p><button id="unregister">Unregister</button>
+
+<p>
+    The unregister functionality is also used on the menu in the top of this page,
+    to unregister the handler on click, to avoid the hassle of confirming every time
+    the visitor chooses to navigate to a new example.
+</p>
+
+<script>
+    var handler = new BeforeUnload('Are you sure you wanna go?', function () {
+        return true;
+    });
+    document.getElementById('unregister').addEventListener('click', function (e) {
+        handler.unregister();
+        e.preventDefault();
+    });
+</script>

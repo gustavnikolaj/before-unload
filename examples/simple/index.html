@@ -1,0 +1,12 @@
+---
+title: Simple beforeunload example.
+layout: example
+---
+
+<p>To see it in action, refresh the page.</p>
+
+<script>
+    var handler = new BeforeUnload('Are you sure you wanna go?', function () {
+        return true;
+    });
+</script>

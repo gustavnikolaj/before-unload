@@ -1,0 +1,49 @@
+body {
+    box-sizing: border-box;
+    color: #333;
+    font-family: sans-serif;
+    margin: 2em auto;
+    max-width: 45em;
+    padding: 2em;
+}
+
+.topbar {
+
+}
+
+.topbar .item {
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    width: 24%;
+}
+
+.topbar .item a {
+    background-color: #eee;
+    color: #333;
+    display: block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+}
+
+.topbar .item a:hover {
+    background-color: #ddd;
+}
+
+a {
+    color: #369;
+}
+
+a:hover {
+    color: #47A;
+}
+
+p {
+    line-height: 1.6;
+}
+
+pre {
+    background-color: #f1f1f1;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+}
