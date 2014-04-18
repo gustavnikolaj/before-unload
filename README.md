@@ -3,6 +3,8 @@
 A generic onbeforeunload handler. Will check a condition, or a list of
 supplied conditions, to determine if it is safe to unload.
 
+The examples are available on the [github project page](https://gustavnikolaj.github.io/before-unload/).
+
 # Installation
 
 Install it from npm:
