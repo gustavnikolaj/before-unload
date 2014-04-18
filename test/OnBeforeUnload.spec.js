@@ -79,4 +79,25 @@ describe('OnBeforeUnload', function () {
             expect(spy, 'was called with', 'beforeunload', 'a mocked handler');
         });
     });
+    describe('Handler', function () {
+        it('should prompt the user if the check function returns true', function () {
+            var fakeObj = {
+                message: 'a message',
+                check: sinon.stub().returns(true)
+            };
+            var event = {};
+            var result = BeforeUnload.prototype.handler.call(fakeObj, event);
+            expect(result, 'to be', fakeObj.message);
+            expect(event, 'to have property', 'returnValue', fakeObj.message);
+        });
+        it('should not prompt the user if the check function returns false', function () {
+            var fakeObj = {
+                check: sinon.stub().returns(false)
+            };
+            var event = {};
+            var result = BeforeUnload.prototype.handler.call(fakeObj, event);
+            expect(result, 'to be undefined');
+            expect(event.returnValue, 'to be undefined');
+        });
+    });
 });
