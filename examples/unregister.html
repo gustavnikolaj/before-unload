@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unregister beforeunload example</title>
+</head>
+<body>
+    <h1>Unregister beforeunload example.</h1>
+    <p>To see it in action, refresh the page.</p>
+    <p><button id="unregister">Unregister</button>
+    <script src="../lib/OnBeforeUnload.js"></script>
+    <script>
+        var handler = new BeforeUnload('Are you sure you wanna go?', function () {
+            return true;
+        });
+        document.getElementById('unregister').addEventListener('click', function (e) {
+            handler.unregister();
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
