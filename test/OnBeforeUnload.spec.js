@@ -17,15 +17,15 @@ describe('OnBeforeUnload', function () {
             });
             it('should call the register function when asked to', function () {
                 BeforeUnload.call(mock, null, null, true);
-                expect(mock.register.called, 'to be ok');
+                expect(mock.register, 'was called');
             });
             it('should not call the register function when not asked to', function () {
                 BeforeUnload.call(mock, null, null, false);
-                expect(mock.register.called, 'not to be ok');
+                expect(mock.register, 'was not called');
             });
             it('should call the register function when no directions is given', function () {
                 BeforeUnload.call(mock, null, null);
-                expect(mock.register.called, 'to be ok');
+                expect(mock.register, 'was called');
             });
         });
     });
