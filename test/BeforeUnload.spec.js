@@ -1,4 +1,4 @@
-describe('OnBeforeUnload', function () {
+describe('BeforeUnload', function () {
     describe('Constructor', function () {
         var fakeObj;
         beforeEach(function () {
