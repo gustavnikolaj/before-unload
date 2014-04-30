@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom messages in conditions, beforeunload example</title>
+</head>
+<body>
+    <h1>Custom messages in conditions, beforeunload example.</h1>
+    <p>
+        To see it in action, refresh the page. You will be prompted for
+        confirmation no matter what. If no conditions is checked, you
+        will see the default message. If one or more of the below
+        conditions are checked, you will be shown the first of the
+        checked custom messages.
+    </p>
+    <p>
+        <input type="checkbox" id="condition1" checked="checked">
+        Condition 1
+    </p>
+    <p>
+        <input type="checkbox" id="condition2" checked="checked">
+        Condition 2
+    </p>
+    <script src="../lib/BeforeUnload.js"></script>
+    <script>
+        var handler = new BeforeUnload('Default message', [
+            function () {
+                return document.getElementById('condition1').checked && 'A custom message';
+            },
+            function () {
+                return document.getElementById('condition2').checked && 'Another custom message';
+            },
+            function () {
+                // This will always return true.
+                return true;
+            }
+        ]);
+    </script>
+</body>
+</html>
