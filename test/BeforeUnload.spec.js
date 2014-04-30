@@ -97,6 +97,39 @@ describe('BeforeUnload', function () {
             expect(BeforeUnload.prototype.check.call(fakeObj), 'not to be ok');
         });
     });
+    describe('Conditions with custom messages', function () {
+        var fakeObj;
+        it('if a message is returned from a conditions it should return the message', function () {
+            fakeObj = { conditions: [
+                sinon.stub().returns('A custom message')
+            ] };
+            var result = BeforeUnload.prototype.check.call(fakeObj);
+            expect(result, 'to be', 'A custom message');
+        });
+        describe('if the handler is called and a....', function () {
+            var fakeObj, fakeEvent;
+            beforeEach(function () {
+                fakeObj = {
+                    message: 'Default message'
+                };
+                fakeEvent = {
+                    returnValue: null
+                };
+            });
+            it('condition with a custom message is triggered pop up the custom message', function () {
+                fakeObj.check = sinon.stub().returns('A custom message');
+                var result = BeforeUnload.prototype.handler.call(fakeObj, fakeEvent);
+                expect(result, 'to be', 'A custom message');
+                expect(fakeEvent.returnValue, 'to be', 'A custom message');
+            });
+            it('condition with a standard message is triggered pop up the standard message', function () {
+                fakeObj.check = sinon.stub().returns(true);
+                var result = BeforeUnload.prototype.handler.call(fakeObj, fakeEvent);
+                expect(result, 'to be', 'Default message');
+                expect(fakeEvent.returnValue, 'to be', 'Default message');
+            });
+        });
+    });
     describe('Registering event handlers', function () {
         it('should be able to register an event handler', function () {
             var spy = sinon.spy();
