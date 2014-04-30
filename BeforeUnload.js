@@ -55,22 +55,32 @@
      * Returns a boolean.
      */
     BeforeUnload.prototype.check = function () {
-        return this.conditions.some(function (condition) {
-            return condition();
+        var result = false;
+
+        this.conditions.some(function (condition) {
+            var conditionResult = condition();
+            if (conditionResult) {
+                result = conditionResult;
+            }
+            return conditionResult;
         });
+
+        return result;
     };
 
     /**
      * The event handler.
      */
     BeforeUnload.prototype.handler = function (e) {
-        if (this.check()) {
+        var check = this.check();
+        var message = check && typeof check === 'string' ? check : this.message;
+        if (check) {
             // Hack needed because some browsers (webkit) requires a
             // return value where the rest expects a returnValue
             // property on the event object.
             // Source: https://developer.mozilla.org/en-US/docs/Web/Reference/Events/beforeunload
-            (e || window.event).returnValue = this.message;
-            return this.message;
+            (e || window.event).returnValue = message;
+            return message;
         }
         return void 0;
     };
