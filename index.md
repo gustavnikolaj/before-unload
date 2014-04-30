@@ -47,6 +47,29 @@ new BeforeUnload('Are you sure you want to leave?', [
 ]);
 ```
 
+## Conditions with custom messages
+
+In the following example, a different warning is shown for
+one of the conditions.
+
+```javascript
+new BeforeUnload('Are you sure you want to leave?', [
+    function () {
+        return ViewModel.hasChanges();
+    },
+    function () {
+        return Storage.unsavedChanges();
+    },
+    function () {
+        return SomeObject.isItOkayToLeave() ? false : 'A custom error message';
+    }
+]);
+```
+
+- If a false is returned from a condition, no warning is shown.
+- If a boolean true value is returned, the default message set in the constructor is shown.
+- If a string value is returned, that is displayed.
+
 ## Unregistering the beforeunload event listener.
 
 If you store a reference to the BeforeUnload object, you can
