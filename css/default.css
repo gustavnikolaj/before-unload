@@ -9,6 +9,7 @@ body {
 
 .topbar {
     box-sizing: border-box;
+    white-space: nowrap;
 }
 
 .topbar .item {
