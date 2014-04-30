@@ -1,3 +1,4 @@
+/*global describe, it, expect, beforeEach, BeforeUnload, sinon */
 describe('BeforeUnload', function () {
     describe('Constructor', function () {
         var fakeObj;
