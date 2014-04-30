@@ -8,14 +8,14 @@ body {
 }
 
 .topbar {
-
+    box-sizing: border-box;
 }
 
 .topbar .item {
     box-sizing: border-box;
     display: inline-block;
     text-align: center;
-    width: 24%;
+    width: 20%;
 }
 
 .topbar .item a {
