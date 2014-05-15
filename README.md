@@ -7,6 +7,11 @@ supplied conditions, to determine if it is safe to unload.
 
 The examples are available on the [github project page](https://gustavnikolaj.github.io/before-unload/).
 
+# Browser support
+
+It supports newer ES5 compatible browsers. And it should be able to
+support most elderly browsers if you provide them with an ES5 shim.
+
 # Installation
 
 Install it from npm:
