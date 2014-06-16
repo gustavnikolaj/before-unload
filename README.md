@@ -1,5 +1,6 @@
 # before-unload
 
+[![NPM version](https://badge.fury.io/js/before-unload.svg)](http://badge.fury.io/js/before-unload)
 [![Build Status](https://travis-ci.org/gustavnikolaj/before-unload.svg)](https://travis-ci.org/gustavnikolaj/before-unload)
 
 A generic onbeforeunload handler. Will check a condition, or a list of
