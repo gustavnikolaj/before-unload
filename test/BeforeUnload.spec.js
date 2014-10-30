@@ -189,4 +189,43 @@ describe('BeforeUnload', function () {
             }, 'to throw', 'before-unload: An exception');
         });
     });
+    describe('Manual confirm', function () {
+        var fakeObj;
+        beforeEach(function () {
+            fakeObj = {};
+            fakeObj.check = BeforeUnload.prototype.check.bind(fakeObj);
+        });
+        it('should call the method if there is no blocking conditions', function () {
+            var spy = sinon.spy();
+            fakeObj.conditions = [sinon.stub().returns(false), sinon.stub().returns(false)];
+
+            BeforeUnload.prototype.confirmedIfNecessary.call(fakeObj, spy);
+
+            expect(spy, 'was called once');
+        });
+        it('should prompt the user before calling the method if there is blocking conditions', function () {
+            sinon.stub(window, 'confirm', function () { return true; });
+            var callbackSpy = sinon.spy();
+            fakeObj.conditions = [sinon.stub().returns('Do not leave just yet, please!')];
+
+            BeforeUnload.prototype.confirmedIfNecessary.call(fakeObj, callbackSpy);
+
+            expect(window.confirm, 'was called with', 'Do not leave just yet, please!');
+            expect(callbackSpy, 'was called once');
+
+            window.confirm.restore();
+        });
+        it('should prompt the user and dont call the callback if the user cancels', function () {
+            sinon.stub(window, 'confirm', function () { return false; });
+            var callbackSpy = sinon.spy();
+            fakeObj.conditions = [sinon.stub().returns('Do not leave just yet, please!')];
+
+            BeforeUnload.prototype.confirmedIfNecessary.call(fakeObj, callbackSpy);
+
+            expect(window.confirm, 'was called with', 'Do not leave just yet, please!');
+            expect(callbackSpy, 'was not called');
+
+            window.confirm.restore();
+        });
+    });
 });
