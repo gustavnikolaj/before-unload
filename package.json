@@ -1,6 +1,6 @@
 {
   "name": "before-unload",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A generic onbeforeunload handler. Will check a list of supplied conditions to determine if it is safe to unload.",
   "main": "lib/BeforeUnload.js",
   "directories": {
