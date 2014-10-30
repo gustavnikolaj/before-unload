@@ -1,4 +1,4 @@
-/*global describe, it, expect, beforeEach, BeforeUnload, sinon */
+/*global describe, it, expect, beforeEach, afterEach, BeforeUnload, sinon */
 describe('BeforeUnload', function () {
     describe('Constructor', function () {
         var fakeObj;
@@ -193,7 +193,12 @@ describe('BeforeUnload', function () {
         var fakeObj;
         beforeEach(function () {
             fakeObj = {};
+            fakeObj.message = 'foo';
             fakeObj.check = BeforeUnload.prototype.check.bind(fakeObj);
+            fakeObj.unregister = sinon.stub();
+        });
+        afterEach(function () {
+            if (window.confirm.restore) { window.confirm.restore(); }
         });
         it('should call the method if there is no blocking conditions', function () {
             var spy = sinon.spy();
@@ -213,7 +218,6 @@ describe('BeforeUnload', function () {
             expect(window.confirm, 'was called with', 'Do not leave just yet, please!');
             expect(callbackSpy, 'was called once');
 
-            window.confirm.restore();
         });
         it('should prompt the user and dont call the callback if the user cancels', function () {
             sinon.stub(window, 'confirm', function () { return false; });
@@ -224,8 +228,35 @@ describe('BeforeUnload', function () {
 
             expect(window.confirm, 'was called with', 'Do not leave just yet, please!');
             expect(callbackSpy, 'was not called');
+        });
+        it('should unregister conditions before the callback is called if the user confirms', function () {
+            sinon.stub(window, 'confirm', function () { return true; });
+            var callbackSpy = sinon.spy();
+            fakeObj.conditions = [sinon.stub().returns(true)];
+            fakeObj.unregister = sinon.spy(function () {
+                // Make sure this is called before callbackSpy
+                expect(callbackSpy, 'was not called');
+            });
 
-            window.confirm.restore();
+            BeforeUnload.prototype.confirmedIfNecessary.call(fakeObj, callbackSpy);
+
+            expect(window.confirm, 'was called');
+            expect(fakeObj.unregister, 'was called once');
+            expect(callbackSpy, 'was called once');
+
+        });
+
+        it('should not unregister conditions before calling the callback if preserveHandlers is true', function () {
+            sinon.stub(window, 'confirm', function () { return true; });
+            var callbackSpy = sinon.spy();
+            fakeObj.conditions = [sinon.stub().returns(true)];
+            fakeObj.unregister = sinon.spy();
+
+            BeforeUnload.prototype.confirmedIfNecessary.call(fakeObj, callbackSpy, true);
+
+            expect(window.confirm, 'was called');
+            expect(fakeObj.unregister, 'was not called');
+            expect(callbackSpy, 'was called once');
         });
     });
 });
