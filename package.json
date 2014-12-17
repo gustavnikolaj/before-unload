@@ -12,13 +12,13 @@
   "author": "Gustav Nikolaj <gustavnikolaj@gmail.com>",
   "license": "BSD-3-Clause",
   "devDependencies": {
+    "es5-shim": "4.0.5",
     "mocha": "2.0.1",
     "mocha-phantomjs": "3.5.1",
     "phantomjs": "1.9.12",
     "sinon": "1.11.1",
     "unexpected": "5.0.0-beta12",
-    "unexpected-sinon": "3.0.2",
-    "es5-shim": "4.0.3"
+    "unexpected-sinon": "3.0.2"
   },
   "repository": "https://github.com/gustavnikolaj/before-unload"
 }
