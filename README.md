@@ -2,7 +2,7 @@
 
 [![NPM version](https://badge.fury.io/js/before-unload.svg)](http://badge.fury.io/js/before-unload)
 [![Build Status](https://travis-ci.org/gustavnikolaj/before-unload.svg)](https://travis-ci.org/gustavnikolaj/before-unload)
-[![Dependency Status](https://david-dm.org/gustavnikolaj/before-unload.png)](https://david-dm.org/gustavnikolaj/before-unload)
+[![Dependency Status](https://david-dm.org/gustavnikolaj/before-unload.svg)](https://david-dm.org/gustavnikolaj/before-unload)
 
 A generic onbeforeunload handler. Will check a condition, or a list of
 supplied conditions, to determine if it is safe to unload.
